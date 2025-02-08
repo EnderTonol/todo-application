@@ -1,8 +1,10 @@
-import { Button, Input,Card,CardBody,Checkbox,Alert,ScrollShadow, CardHeader, Chip, Divider, Link } from '@heroui/react';
+import { Button, Input,Card,CardBody,Checkbox,Alert,ScrollShadow, CardHeader, Chip, Divider, Link, CardFooter,Image, Spinner } from '@heroui/react';
 import { useDispatch,useSelector } from 'react-redux';
 import { insertTodo,deleteTodo,editTodo,toggleDone } from './features/todoSlicer';
-import { useState } from 'react';
+import { useState,Suspense } from 'react';
 import { motion } from 'framer-motion';
+import Tlogo from "./assets/Tlogo.svg"
+import "./App.css";
 function App() {
   
   const State = useSelector((state)=> state.Todos);
@@ -12,15 +14,20 @@ function App() {
 
 
   return (
-    <>
-    <div className='flex flex-col items-center justify-center h-full gap-3 p-4 '>
-    <p className='font-mono text-2xl font-bold'>Simple Todo</p>
+    
+    <motion.div className='bgs h-[100vh]'>
+    <div className='flex flex-col items-center justify-center gap-3 p-4 '>
+    <Image src={Tlogo} width={120} />
     <div className='flex flex-row gap-2'>
-    <Input type='text' value={Text} className='mb-2 w-52' onChange={(e)=>setText(e.target.value)} />
+    <Input label="Add Task" type='text' value={Text} className='mb-2 w-52' onChange={(e)=>setText(e.target.value)} />
     <Button color='primary' onPress={()=>{ dispatch(insertTodo(Text)); setText("")}}>Insert</Button>
     </div>
 { (State.length > 0)? (
-    <Card className='mt-4 min-w-[300px]'>
+  <Card className='mt-2 min-w-[300px]'>
+    <CardHeader>
+      <p className='min-w-[300px] text-lg font-sans font-bold text-start'>Tasks</p>  
+    </CardHeader>
+    <Divider/>
       <CardBody className='flex flex-col gap-2 p-2'>
       <ScrollShadow className='h-[400px] flex flex-col gap-2 p-2'>
       {
@@ -46,11 +53,15 @@ function App() {
       </CardHeader>
       <Divider/>
       <CardBody>
-        <p className='text-sm'>This Project is fully OpenSource. Developed With ReactJS Web FrameWork. <Link href='https://github.com/EnderTonol/'>GitHub</Link></p>
+        <p className='font-sans text-sm'>This Project is fully OpenSource. Developed With ReactJS Web FrameWork. <Link showAnchorIcon href='https://github.com/EnderTonol/todo-application' isExternal >GitHub</Link></p>
       </CardBody>
+      <Divider/>
+      <CardFooter>
+        <p className='font-sans text-tiny'>Developed By Quddus</p>
+      </CardFooter>
     </Card>
     </div>
-    </>
+    </motion.div>
   )
 }
 
